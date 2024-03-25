@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 게시판용입니다. けいじばんようです -->
+
+<mapper namespace="Comment">
+    <insert id="save" parameterType="comment">
+        insert into comment_table(commentWriter, commentContents, boardId)
+        values (#{commentWriter}, #{commentContents}, #{boardId})
+    </insert>
+
+    <select id="findAll" parameterType="Long" resultType="comment">
+        select * from comment_table where boardId=#{boardId} order by commentid desc
+    </select>
+    <!-- <delete id="commentdelete" parameterType="Long">
+        delete from comment_table where commentid=#{boardId}
+    </delete> -->
+    <delete id="commentdelete" parameterType="Long">
+        delete from comment_table where commentid=#{id}
+    </delete>
+    <select id="findWriter" parameterType="Long" resultType="String">
+        select commentWriter from comment_table where commentid=#{id}
+    </select>
+    <!-- 수정 기능을 위한 메퍼 しゅうせいきのうのためのマッパー -->
+    <update id="commentUpdate" parameterType="java.util.HashMap">
+        update comment_table set commentContents=#{contents} where commentid=#{id}
+    </update>
+</mapper>

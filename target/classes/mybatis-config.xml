@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- 게시판용입니다. けいじばんようです -->
+<configuration>
+    <typeAliases>
+        <typeAlias type="com.board.board_01.dto.BoardDTO" alias="board"/>
+        <typeAlias type="com.board.board_01.dto.CommentDTO" alias="comment"/>
+        <typeAlias type="com.board.member_01.dto.MemberDTO" alias="member"/>
+    </typeAliases>
+</configuration>

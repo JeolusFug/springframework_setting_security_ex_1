@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 게시판용입니다. けいじばんようです -->
+<mapper namespace="Board">
+    <!-- 페이징 기능이 있는 작성 ページングきのうがあるさくせい -->
+    <insert id="save" parameterType="board">
+        insert into board_table(boardWriter, boardPass, boardTitle, boardContents)
+        values(#{boardWriter}, #{boardPass}, #{boardTitle}, #{boardContents})
+    </insert>
+    <!-- 페이징 기능이 없는 작성 ページングきのうがないさくせい -->
+    <insert id="save1" parameterType="board">
+        insert into board_table(boardWriter, boardPass, boardTitle, boardContents)
+        values(#{boardWriter}, #{boardPass}, #{boardTitle}, #{boardContents})
+    </insert>
+    <select id="findAll" resultType="board">
+        select * from board_table order by id desc
+    </select>
+    <select id="findById" parameterType="Long" resultType="board">
+        select * from board_table where id=#{id}
+    </select>
+    <update id="updateHits" parameterType="Long">
+        update board_table set boardHits = boardHits + 1 where id=#{id}
+    </update>
+    <delete id="delete" parameterType="Long">
+        delete from board_table where id=#{id}
+    </delete>
+    <update id="update" parameterType="board">
+        update board_table set boardTitle=#{boardTitle}, boardContents=#{boardContents}
+        where id=#{id}
+    </update>
+    <select id="pagingList" parameterType="java.util.HashMap" resultType="board">
+        select * from board_table order by id desc limit #{start}, #{limit}
+    </select>
+    <select id="boardCount" resultType="Integer">
+        select count(id) from board_table
+    </select>
+    <!-- 페이징 기능이 없는 검색기능을 위한 Mapper. 처음은 제목만을 검색하기 위한 Mapper
+    　   　ページングきのうがないけんさくきのうのためのMapper。さいしょはタイトルだけをけんさくするためのMapper　-->
+    <select id="findAllSearch" resultType="board">
+        select * from board_table
+        <if test='searchType == "title"'>
+            where boardTitle like concat('%', #{keyword}, '%') order by id desc
+        </if>
+        <if test='searchType == "content"'>
+            where boardContents like concat('%', #{keyword}, '%') order by id desc
+        </if>
+        <if test='searchType == "title_content"'>
+            where boardTitle like concat('%', #{keyword}, '%')
+            or boardContents like concat('%', #{keyword}, '%')
+            order by id desc
+        </if>
+        <if test='searchType == "writer"'>
+            where boardWriter like concat('%', #{keyword}, '%') order by id desc
+        </if>
+    </select>
+
+    <!-- 검색 기능 작성 후 페이징 기능 작성 けんさくきのうをさくせいしたあと、ページングきのうをさくせい -->
+    <select id="Search1" parameterType="java.util.HashMap" resultType="board">
+        select * from board_table order by id desc limit #{start}, #{limit}
+    </select>
+
+    <select id="Search2" parameterType="String" resultType="board">
+        select * from board_table
+        <if test='searchType == "title"'>
+            where boardTitle like concat('%', #{keyword}, '%') order by id desc limit #{start}, #{limit}
+        </if>
+        <if test='searchType == "content"'>
+            where boardContents like concat('%', #{keyword}, '%') order by id desc limit #{start}, #{limit}
+        </if>
+        <if test='searchType == "title_content"'>
+            where boardTitle like concat('%', #{keyword}, '%')
+            or boardContents like concat('%', #{keyword}, '%')
+            order by id desc limit #{start}, #{limit}
+        </if>
+        <if test='searchType == "writer"'>
+            where boardWriter like concat('%', #{keyword}, '%') order by id desc limit #{start}, #{limit}
+        </if>
+    </select>
+    <select id="PageSearchCount1" resultType="Integer">
+        select count(id) from board_table
+    </select>
+    <select id="PageSearchCount2" resultType="Integer">
+        select count(id) from board_table
+        <if test='searchType == "title"'>
+            where boardTitle like concat('%', #{keyword}, '%')
+        </if>
+        <if test='searchType == "content"'>
+            where boardContents like concat('%', #{keyword}, '%')
+        </if>
+        <if test='searchType == "title_content"'>
+            where boardTitle like concat('%', #{keyword}, '%')
+            or boardContents like concat('%', #{keyword}, '%')
+        </if>
+        <if test='searchType == "writer"'>
+            where boardWriter like concat('%', #{keyword}, '%')
+        </if>
+    </select>
+    <!-- 글 작성자와 현재 로그인한 ID가 동일한지 확인하기 위해 글 작성자를 찾아냄
+         ぶんのさくせいしゃとげんざいログインしたIDがどういつかかくにんするためぶんのさくせいしゃをさがす-->
+    <select id="checkForDelete" parameterType="Long" resultType="board">
+        select * from board_table where id=#{id}
+    </select>
+</mapper>
