@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 회원가입용입니다. かいいんとうろくようです -->
+
+<mapper namespace="Member">
+    <insert id="saveForMember" parameterType="member">
+        insert into member_table(memberEmail, memberPassword, memberName, memberAge, memberMobile)
+        values (#{memberEmail}, #{memberPassword}, #{memberName}, #{memberAge}, #{memberMobile})
+    </insert>
+    <select id="loginForMember" parameterType="member" resultType="member">
+        select * from member_table where memberEmail=#{memberEmail} and memberPassword=#{memberPassword}
+        <!-- 이메일과 비밀번호가 둘 다 일치하는 항목이 있는지 조회 -->
+        <!-- IDとパスワード、りょうほうにいっちするこうもくがあるかどうかをしょうかい -->
+    </select>
+    <select id="findAllForMember" resultType="member">
+        select * from member_table
+        <!-- 회원목록 조회용 かいいんもくろくしょうかいよう -->
+    </select>
+    <select id="findByIdForMember" parameterType="Long" resultType="member">
+        select * from member_table where id=#{id}
+        <!-- 회원정보 상세조회용 かいいんじょうほうしょうさいしょうかいよう -->
+    </select>
+    <delete id="deleteForMember" parameterType="Long">
+        delete from member_table where id=#{id}
+        <!-- 회원정보 상세조회에서 삭제 かいいんじょうほうしょうさいしょうかいからさくじょ　-->
+    </delete>
+    <select id="findByMemberEmailForMember" parameterType="String" resultType="member">
+        select * from member_table where memberEmail=#{loginEmail}
+    </select>
+    <update id="updateForMember" parameterType="member">
+        update member_table set memberAge=#{memberAge}, memberMobile=#{memberMobile} where id=#{id}
+        <!-- 회원 정보 수정 かいいんじょうほうしゅうせい -->
+    </update>
+</mapper>

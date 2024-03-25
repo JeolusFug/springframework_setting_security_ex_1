@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+</head>
+<body>
+<div class="container my-3">
+    <div class="my-3 border-bottom">
+        <div>
+            <h4>회원가입</h4>
+        </div>
+    </div>
+    <form action="/user/signup" method="post">
+        <!-- Thymeleaf의 속성을 HTML로 변환할 때는 해당 부분을 제거하거나 수정합니다. -->
+        <div class="mb-3">
+            <label for="memberEmail" class="form-label">사용자ID</label>
+            <input type="text" name="memberEmail" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="memberPassword1" class="form-label">비밀번호</label>
+            <input type="password" name="memberPassword1" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="memberPassword2" class="form-label">비밀번호 확인</label>
+            <input type="password" name="memberPassword2" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="memberName" class="form-label">이메일</label>
+            <input type="text" name="memberName" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="memberAge" class="form-label">이메일</label>
+            <input type="number" name="memberAge" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label for="memberMobile" class="form-label">이메일</label>
+            <input type="text" name="memberMobile" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">회원가입</button>
+    </form>
+</div>
+</body>
+</html>
