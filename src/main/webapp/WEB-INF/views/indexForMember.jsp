@@ -12,7 +12,7 @@
     <a href="/member/saveForMember">회원가입</a>
     <a href="/member/loginForMember">로그인</a>
     <a href="/member/">회원목록 조회</a>
-    <a href="/user/signup">테스트</a>
+    <a href="/main/">테스트</a>
 
 </body>
 </html>
